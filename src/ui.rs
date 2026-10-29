@@ -22,7 +22,9 @@ fn localized(
     }
     for (locale, text) in map {
         locales.insert(locale.clone());
-        if locale.trim().is_empty() || text.as_str().is_none_or(|text| text.trim().is_empty()) {
+        if language_tags::LanguageTag::parse(locale).is_err()
+            || text.as_str().is_none_or(|text| text.trim().is_empty())
+        {
             return Err(invalid(format!(
                 "UI 语言映射必须使用非空语言标签和文案: {location}"
             )));

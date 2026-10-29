@@ -1,0 +1,35 @@
+{
+  "repository": "https://github.com/libretro/slang-shaders",
+  "commit": "2b0530bac0e8083d9d643c194929dc0a6b69bd35",
+  "method": "Compare Git blob object hash of exact downloaded bytes with fixed upstream recursive Git tree",
+  "files": [
+    {
+      "family": "dot",
+      "path": "handheld/dot.slangp",
+      "git_blob_sha1": "2f6528ab4e5afa1c365c5efe244ac6c740c9af73",
+      "sha256": "97ba13ac0676e7b07f1c6090897962279c1ecbca84c645ea0a920638eab34873",
+      "size": 92
+    },
+    {
+      "family": "dot",
+      "path": "handheld/shaders/dot.slang",
+      "git_blob_sha1": "c84c7c9c114dd84e0ef4adfec46cf530d476b2e5",
+      "sha256": "19e01f9d346042fa0363cf72b890de3ec088c374ab6ea5f4f2408dd146f1e415",
+      "size": 3306
+    },
+    {
+      "family": "sharp-bilinear",
+      "path": "pixel-art-scaling/sharp-bilinear.slangp",
+      "git_blob_sha1": "ca109f5ed244476b19a266243cae04a227b053e1",
+      "sha256": "059a79b17fe4635420f032cb8c1c42072bf7e9104052f3a6cce564cca17f9b5d",
+      "size": 99
+    },
+    {
+      "family": "sharp-bilinear",
+      "path": "pixel-art-scaling/shaders/sharp-bilinear.slang",
+      "git_blob_sha1": "90508aa9073db57375c6b0e712bcea8fe20bc4ff",
+      "sha256": "89c30132f1530466676a3be76fcdc5af42f808cd56df6571ff65b64e7073ab7e",
+      "size": 1726
+    }
+  ]
+}

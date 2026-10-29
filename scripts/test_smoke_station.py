@@ -57,3 +57,19 @@ class SmokeFailureTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class FamilyMetadataTests(unittest.TestCase):
+    def test_expected_metadata_comes_from_each_actual_cart(self):
+        import zipfile
+        with tempfile.TemporaryDirectory() as directory:
+            for family in ['dot', 'sharp-bilinear']:
+                path = Path(directory) / (family + '.cart')
+                with zipfile.ZipFile(path, 'w') as archive:
+                    archive.writestr('cartfile.toml', f'id="org.continue.shaders.{family}"\nversion="0.1.0-smoke.1"\n')
+                    archive.writestr('continue.toml', f'id="org.continue.shader.{family}"\nversion="0.1.0-smoke.1"\n[shader.variants.standard]\nparameters="parameters/standard.json"\n')
+                    archive.writestr('parameters/standard.json', '{"parameters": [{"id":"original_id","variant_default":0.5,"source_initial":0.25,"min":0,"max":1,"step":0.1}]}')
+                    archive.writestr('ui.json', '{"parameters": {"original_id":{"label":{"en":"Control","zh-CN":"参数"},"description":{"en":"Meaning","zh-CN":"说明"}}}}')
+                expected = smoke_station.expected_metadata(path)
+                self.assertEqual(expected['cart_id'], 'org.continue.shaders.'+family)
+                self.assertEqual(expected['resource_id'], 'org.continue.shader.'+family)
+                self.assertEqual(expected['variants']['standard'][0]['id'], 'original_id')

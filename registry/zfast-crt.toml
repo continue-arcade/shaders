@@ -4,7 +4,21 @@ version = "0.1.0-smoke.1"
 repository = "https://github.com/libretro/slang-shaders"
 commit = "2b0530bac0e8083d9d643c194929dc0a6b69bd35"
 license = "GPL-2.0-or-later"
-# 首个切片采用明确登记列表；尚未实现全库发现。
+source_root = "upstream/slang-shaders"
+cart_id = "org.continue.shaders.zfast-crt"
+resource_id = "org.continue.shader.zfast-crt"
+tag_prefix = "zfast-crt/"
+release_notes = "docs/releases/zfast-crt-0.1.0-smoke.1.md"
+copyright = "Copyright (C) 2017 Greg Hogan (SoltanGris42)"
+contributions = ["GTUv050-alike blur added by metallic77"]
+license_scope = "GPL-2.0-or-later applies to the bundled shader family and Cart. The generator in the repository is MIT licensed."
+
+[packaging]
+cart_name = "Zfast CRT Shader Family"
+resource_name = "Zfast CRT"
+author = "Greg Hogan (SoltanGris42); metallic77"
+cart_description = "Self-contained source-locked Zfast CRT family; distribution smoke candidate."
+resource_description = "Zfast CRT standard and composite presets. GPU rendering validation pending."
 
 [[variants]]
 id = "standard"

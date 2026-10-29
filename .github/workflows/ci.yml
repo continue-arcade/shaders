@@ -19,5 +19,11 @@ jobs:
         run: mise exec -- rustup component add --toolchain 1.93.1 rustfmt clippy
       - name: Rust 工程门禁
         run: mise run check
-      - name: 生成自包含家族 Cart
-        run: mise exec -- cargo run --locked -- build --family zfast-crt --out dist
+      - name: 从登记发现并构建所有家族
+        run: |
+          mise exec -- cargo run --locked -- families > families.json
+          mise exec -- python3 - <<'PYTHON'
+          import json, subprocess
+          for family in json.load(open("families.json")):
+              subprocess.run(["mise", "exec", "--", "cargo", "run", "--locked", "--", "build", "--family", family, "--out", "dist"], check=True)
+          PYTHON

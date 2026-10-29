@@ -2,12 +2,17 @@ name: 发布候选
 
 on:
   workflow_dispatch:
+    inputs:
+      family:
+        description: 已登记的家族 slug；每次只发布一个家族
+        required: true
+        type: string
 
 permissions:
   contents: write
 
 concurrency:
-  group: shader-candidate-zfast-crt
+  group: shader-candidate-${{ inputs.family }}
   cancel-in-progress: false
 
 jobs:
@@ -15,36 +20,19 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RUSTDOCFLAGS: -D warnings
+      FAMILY: ${{ inputs.family }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: jdx/mise-action@c37c93293d6b742fc901e1406b8f764f6fb19dac # v2
       - name: 安装 Rust 检查组件
         run: mise exec -- rustup component add --toolchain 1.93.1 rustfmt clippy
-      - name: 验证并生成
+      - name: 验证并生成指定家族
         run: |
           mise run check
-          mise exec -- cargo run --locked -- build --family zfast-crt --out dist
-      - name: 建立草稿候选
+          mise exec -- cargo run --locked -- build --family "$FAMILY" --out dist
+      - name: 建立单家族草稿候选（拒绝已有 tag 与 Release）
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           SOURCE_REVISION: ${{ github.sha }}
-        run: |
-          python3 - <<'PY'
-          import json, os, pathlib, subprocess
-          report_path = pathlib.Path("dist/zfast-crt-report.json")
-          report = json.loads(report_path.read_text())
-          version = report["version"]
-          tag = "zfast-crt/v" + version
-          carts = list(pathlib.Path("dist").glob("*.cart"))
-          if len(carts) != 1:
-              raise SystemExit("本候选必须准确生成一张 Cart")
-          notes = pathlib.Path("dist/candidate-notes.md")
-          notes.write_text("Zfast CRT 自包含 Cart 候选。\n\n本版本尚未通过真实 GPU、跨平台与 25 项精选验收。\n\n构建报告与 Cart 已附上；维护者验收后再选择公开发布。\n")
-          subprocess.run([
-              "gh", "release", "create", tag, str(carts[0]), str(report_path),
-              "--draft", "--prerelease", "--target", os.environ["SOURCE_REVISION"],
-              "--title", "Zfast CRT " + version,
-              "--notes-file", str(notes),
-          ], check=True)
-          PY
+        run: mise exec -- python3 scripts/candidate.py --family "$FAMILY" --out dist --revision "$SOURCE_REVISION"

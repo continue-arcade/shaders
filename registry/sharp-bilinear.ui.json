@@ -1,0 +1,62 @@
+{
+  "schema": "continue.shader-ui.v1",
+  "default_locale": "en",
+  "label": {
+    "en": "Sharp Bilinear",
+    "zh-CN": "锐利双线性缩放"
+  },
+  "description": {
+    "en": "Pixel scaling with sharp interiors and bilinear edges.",
+    "zh-CN": "通过锐利像素内部和双线性边缘进行像素缩放。"
+  },
+  "groups": {
+    "basic": {
+      "label": {
+        "en": "Parameters",
+        "zh-CN": "参数"
+      },
+      "description": {
+        "en": "Original shader controls.",
+        "zh-CN": "上游原始着色器参数。"
+      }
+    }
+  },
+  "variants": {
+    "standard": {
+      "label": {
+        "en": "Standard",
+        "zh-CN": "标准"
+      },
+      "description": {
+        "en": "Pixel scaling with sharp interiors and bilinear edges.",
+        "zh-CN": "通过锐利像素内部和双线性边缘进行像素缩放。"
+      }
+    }
+  },
+  "parameters": {
+    "SHARP_BILINEAR_PRE_SCALE": {
+      "label": {
+        "en": "Prescale",
+        "zh-CN": "预缩放倍数"
+      },
+      "description": {
+        "en": "Nearest-neighbor prescale used when automatic prescale is disabled.",
+        "zh-CN": "关闭自动预缩放时使用的最近邻预缩放倍数。"
+      },
+      "group": "basic",
+      "control": "number"
+    },
+    "AUTO_PRESCALE": {
+      "label": {
+        "en": "Automatic prescale",
+        "zh-CN": "自动预缩放"
+      },
+      "description": {
+        "en": "Use output height to select the prescale (0 off, 1 on).",
+        "zh-CN": "根据输出高度选择预缩放倍数（0 关闭，1 开启）。"
+      },
+      "group": "basic",
+      "control": "number"
+    }
+  }
+}

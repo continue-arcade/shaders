@@ -1,4 +1,4 @@
-use crate::{CART_ID, Registry, Result, VERSION, json_bytes, sources::sha256};
+use crate::{Registry, Result, json_bytes, sources::sha256};
 use serde_json::json;
 use std::{
     collections::BTreeMap,
@@ -6,18 +6,38 @@ use std::{
 };
 use zip::{ZipWriter, write::SimpleFileOptions};
 
-pub(crate) fn cart_manifest() -> String {
+pub(crate) fn cart_manifest(r: &Registry) -> String {
+    let cart_id = &r.cart_id;
+    let version = &r.version;
+    let p = &r.packaging;
+    let roots: std::collections::BTreeSet<_> = r
+        .files
+        .iter()
+        .map(|f| {
+            f.path
+                .split_once('/')
+                .map_or_else(|| f.path.clone(), |(dir, _)| format!("{dir}/"))
+        })
+        .collect();
+    let mut paths = vec!["continue.toml".to_owned()];
+    paths.extend(roots);
+    paths.extend(["parameters/", "ui.json", "provenance.json", "LICENSES/"].map(str::to_owned));
+    let paths = paths
+        .iter()
+        .map(|v| toml::Value::String(v.clone()).to_string())
+        .collect::<Vec<_>>()
+        .join(", ");
     format!(
         r#"schema = "continue.cartfile.v1"
-id = "{CART_ID}"
-name = "Zfast CRT Shader Family"
-version = "{VERSION}"
-author = "Greg Hogan (SoltanGris42); metallic77"
+id = "{cart_id}"
+name = {cart_name}
+version = "{version}"
+author = {author}
 publisher = "Continue"
-description = "Self-contained source-locked Zfast CRT family; distribution smoke candidate."
+description = {description}
 
 [links]
-source = "https://github.com/libretro/slang-shaders"
+source = {repository}
 
 [artifact]
 format = "cart.zip.v1"
@@ -25,22 +45,27 @@ format = "cart.zip.v1"
 runtime = "continue"
 
 [include]
-paths = ["continue.toml", "crt/", "parameters/", "ui.json", "provenance.json", "LICENSES/"]
-"#
+paths = [{paths}]
+"#,
+        cart_name = quote(&p.cart_name),
+        author = quote(&p.author),
+        description = quote(&p.cart_description),
+        repository = quote(&r.repository),
     )
 }
 
 pub(crate) fn resource_manifest(registry: &Registry) -> String {
+    let version = &registry.version;
     let mut output = format!(
         r#"schema = "continue.resource.v1"
 type = "shader"
-id = "org.continue.shader.zfast-crt"
-name = "Zfast CRT"
-version = "{VERSION}"
-author = "Greg Hogan (SoltanGris42); metallic77"
-license = "GPL-2.0-or-later"
-description = "Zfast CRT standard and composite presets. GPU rendering validation pending."
-entrypoint = "crt/zfast-crt.slangp"
+id = {resource_id}
+name = {resource_name}
+version = "{version}"
+author = {author}
+license = {license}
+description = {description}
+entrypoint = {entrypoint}
 
 [[targets]]
 runtime = "continue"
@@ -48,12 +73,20 @@ runtime = "continue"
 [shader]
 format = "slang"
 ui = "ui.json"
-"#
+"#,
+        resource_id = quote(&registry.resource_id),
+        resource_name = quote(&registry.packaging.resource_name),
+        author = quote(&registry.packaging.author),
+        license = quote(&registry.license),
+        description = quote(&registry.packaging.resource_description),
+        entrypoint = quote(&registry.variants[0].entrypoint),
     );
     for v in &registry.variants {
         output.push_str(&format!(
-            "\n[shader.variants.{}]\nentrypoint = \"{}\"\nparameters = \"parameters/{}.json\"\n",
-            v.id, v.entrypoint, v.id
+            "\n[shader.variants.{}]\nentrypoint = {}\nparameters = \"parameters/{}.json\"\n",
+            v.id,
+            quote(&v.entrypoint),
+            v.id
         ));
     }
     output
@@ -76,9 +109,9 @@ pub(crate) fn add_provenance(
         "metadata_inputs": {"ui": registry.ui_file},
         "license": registry.license,
         "license_file": registry.license_file,
-        "copyright": "Copyright (C) 2017 Greg Hogan (SoltanGris42)",
-        "contributions": ["GTUv050-alike blur added by metallic77"],
-        "license_scope": "GPL-2.0-or-later applies to the bundled shader family and Cart. The generator in the repository is MIT licensed.",
+        "copyright": registry.copyright,
+        "contributions": registry.contributions,
+        "license_scope": registry.license_scope,
         "parser": {"librashader-presets": "0.12.1", "librashader-preprocess": "0.12.1"},
         "files": files,
         "inventory_scope": "All packaged files except provenance.json itself; the complete archive SHA-256 is in the external build report.",
@@ -99,4 +132,8 @@ pub(crate) fn archive(payload: &BTreeMap<String, Vec<u8>>) -> Result<Vec<u8>> {
         zip.write_all(bytes)?;
     }
     Ok(zip.finish()?.into_inner())
+}
+
+fn quote(value: &str) -> String {
+    toml::Value::String(value.into()).to_string()
 }

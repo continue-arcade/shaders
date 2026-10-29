@@ -1,0 +1,42 @@
+schema = "continue.shader-family.v1"
+family = "sharp-bilinear"
+version = "0.1.0-smoke.1"
+repository = "https://github.com/libretro/slang-shaders"
+commit = "2b0530bac0e8083d9d643c194929dc0a6b69bd35"
+license = "LicenseRef-Public-Domain"
+source_root = "upstream/slang-shaders"
+cart_id = "org.continue.shaders.sharp-bilinear"
+resource_id = "org.continue.shader.sharp-bilinear"
+tag_prefix = "sharp-bilinear/"
+release_notes = "docs/releases/sharp-bilinear-0.1.0-smoke.1.md"
+copyright = "Author: Themaister; upstream declares Public domain."
+license_scope = "Bundled shader sources retain the upstream Public domain declaration (LicenseRef-Public-Domain). Presets are distributed verbatim with source provenance; no separate preset notice was present. The generator is MIT licensed."
+contributions = []
+
+[packaging]
+cart_name = "Sharp Bilinear Shader Family"
+resource_name = "Sharp Bilinear"
+author = "Themaister"
+cart_description = "Self-contained source-locked Sharp Bilinear family; distribution smoke candidate."
+resource_description = "Pixel scaling with sharp interiors and bilinear edges. GPU rendering validation pending."
+
+[[variants]]
+id = "standard"
+entrypoint = "pixel-art-scaling/sharp-bilinear.slangp"
+
+[[files]]
+path = "pixel-art-scaling/sharp-bilinear.slangp"
+sha256 = "059a79b17fe4635420f032cb8c1c42072bf7e9104052f3a6cce564cca17f9b5d"
+
+[[files]]
+path = "pixel-art-scaling/shaders/sharp-bilinear.slang"
+sha256 = "89c30132f1530466676a3be76fcdc5af42f808cd56df6571ff65b64e7073ab7e"
+
+[license_file]
+path = "LICENSES/sharp-bilinear-Public-Domain.txt"
+sha256 = "f0e6445192b6a38a9941810a235af84b7b9b63364df7aef7147241504fe609b6"
+source = "https://github.com/libretro/slang-shaders/blob/2b0530bac0e8083d9d643c194929dc0a6b69bd35/pixel-art-scaling/shaders/sharp-bilinear.slang"
+
+[ui_file]
+path = "registry/sharp-bilinear.ui.json"
+sha256 = "992a27764e2fc3133b8b1ba1030b8aa8b5bb6ec0a2031203ca48530b44502027"

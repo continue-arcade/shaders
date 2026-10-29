@@ -1,0 +1,86 @@
+{
+  "schema": "continue.shader-ui.v1",
+  "default_locale": "en",
+  "label": {
+    "en": "Dot",
+    "zh-CN": "Dot 点阵显示"
+  },
+  "description": {
+    "en": "A lightweight dot-matrix display effect.",
+    "zh-CN": "轻量的点阵显示效果。"
+  },
+  "groups": {
+    "basic": {
+      "label": {
+        "en": "Parameters",
+        "zh-CN": "参数"
+      },
+      "description": {
+        "en": "Original shader controls.",
+        "zh-CN": "上游原始着色器参数。"
+      }
+    }
+  },
+  "variants": {
+    "standard": {
+      "label": {
+        "en": "Standard",
+        "zh-CN": "标准"
+      },
+      "description": {
+        "en": "A lightweight dot-matrix display effect.",
+        "zh-CN": "轻量的点阵显示效果。"
+      }
+    }
+  },
+  "parameters": {
+    "gamma": {
+      "label": {
+        "en": "Dot gamma",
+        "zh-CN": "点阵伽马"
+      },
+      "description": {
+        "en": "Controls the falloff of each pixel dot.",
+        "zh-CN": "控制每个像素点的亮度衰减。"
+      },
+      "group": "basic",
+      "control": "number"
+    },
+    "shine": {
+      "label": {
+        "en": "Dot shine",
+        "zh-CN": "点阵光泽"
+      },
+      "description": {
+        "en": "Adjusts brightness-dependent dot bloom.",
+        "zh-CN": "调整随亮度变化的像素点光泽。"
+      },
+      "group": "basic",
+      "control": "number"
+    },
+    "blend": {
+      "label": {
+        "en": "Dot blend",
+        "zh-CN": "点阵混合"
+      },
+      "description": {
+        "en": "Blends the center pixel with surrounding dot samples.",
+        "zh-CN": "混合中心像素与周围点阵采样。"
+      },
+      "group": "basic",
+      "control": "number"
+    },
+    "soft": {
+      "label": {
+        "en": "Dot softness",
+        "zh-CN": "点阵柔化"
+      },
+      "description": {
+        "en": "Controls neighboring sample spacing.",
+        "zh-CN": "控制相邻像素的采样间距。"
+      },
+      "group": "basic",
+      "control": "number"
+    }
+  }
+}

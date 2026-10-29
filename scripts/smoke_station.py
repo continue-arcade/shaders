@@ -8,6 +8,9 @@ import json
 import selectors
 import subprocess
 import time
+import tomllib
+import zipfile
+import math
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -29,6 +32,38 @@ def validate_public_key(public_key):
             raise ValueError("公钥 DER 与 key_id 不符")
     except (KeyError, TypeError, ValueError) as error:
         raise ValueError("独立 Station 公钥无效") from error
+
+
+def expected_metadata(path):
+    """以待测实际 Cart 为准，避免把家族、版本、参数数量写死在 runner。"""
+    with zipfile.ZipFile(path) as archive:
+        cart = tomllib.loads(archive.read('cartfile.toml').decode())
+        resource = tomllib.loads(archive.read('continue.toml').decode())
+        ui = json.loads(archive.read('ui.json'))
+        return dict(cart_id=cart['id'], version=cart['version'], resource_id=resource['id'],
+                    variants={key: json.loads(archive.read(value['parameters']))['parameters']
+                              for key, value in resource['shader']['variants'].items()}, ui=ui)
+
+
+def verify_shader_view(view, expected):
+    if (view['resourceId'], view['cartId'], view['version'], view['cartRelease']) != (
+            expected['resource_id'], expected['cart_id'], expected['version'], expected['version']):
+        raise AssertionError('正式 Shader API 的资源身份或版本不符')
+    if {v['id'] for v in view['variants']} != set(expected['variants']):
+        raise AssertionError('正式 Shader API 的变体集合不符')
+    for variant in view['variants']:
+        actual = {p['id']: p for p in variant['parameters']}
+        wanted = {p['id']: p for p in expected['variants'][variant['id']]}
+        if set(actual) != set(wanted):
+            raise AssertionError('原始参数 ID 集合不符')
+        for identity, source in wanted.items():
+            for target, origin in [('minimum','min'), ('maximum','max'), ('step','step'),
+                                   ('sourceInitial','source_initial'), ('defaultValue','variant_default')]:
+                if not math.isclose(actual[identity][target], source[origin], rel_tol=1e-6, abs_tol=1e-7):
+                    raise AssertionError('正式 Shader API 技术参数不符: ' + identity + '.' + target)
+            for field in ['label', 'description']:
+                if actual[identity][field] != expected['ui']['parameters'][identity][field]:
+                    raise AssertionError('正式 Shader API 多语言映射不符: ' + identity)
 
 
 class Core:
@@ -117,8 +152,9 @@ def main():
     validate_public_key(public_key)
     args.out.mkdir(parents=True, exist_ok=False)
     expected = hashlib.sha256(args.expected_cart.read_bytes()).hexdigest()
-    cart_id = "org.continue.shaders.zfast-crt"
-    version = "0.1.0-smoke.1"
+    metadata = expected_metadata(args.expected_cart)
+    cart_id = metadata['cart_id']
+    version = metadata['version']
     descriptor = json.loads(get(urllib.parse.urljoin(base, "station.json")))
     release = json.loads(get(urllib.parse.urljoin(
         base, f"api/v1/carts/{cart_id}/releases/{version}")))["release"]
@@ -184,6 +220,12 @@ def main():
         manifests = list(artifact_root.rglob("continue.toml"))
         if not manifests:
             raise AssertionError("安装没有产生真实资源 manifest")
+        view = core.call("shaders.get", {"resourceId": metadata['resource_id']})
+        verify_shader_view(view, metadata)
+        listed = core.call("shaders.installed.list")
+        if listed['issues'] or not any(v['resourceId'] == metadata['resource_id'] for v in listed['shaders']):
+            raise AssertionError('正式 Shader 列表读取失败或报告问题')
+        (args.out / 'shader-view.json').write_text(json.dumps(view, ensure_ascii=False, indent=2)+'\n')
         core.call("carts.station.remove", {"context": context, "cartId": cart_id})
         remaining = core.call("carts.station.installations.list")["carts"]
         if any(row["cartId"] == cart_id for row in remaining):
@@ -192,11 +234,14 @@ def main():
             raise AssertionError("卸载改动了用户数据或不可变制品")
         report = {"passed": True, "station_id": descriptor["id"],
                   "cart_id": cart_id, "cart_release": version,
+                  "resource_id": metadata['resource_id'],
+                  "variant_parameters": {k: len(v) for k,v in metadata['variants'].items()},
                   "cart_artifact": artifact["cart_artifact"],
                   "bundle_sha256": expected, "signing_key_id": envelope["key_id"],
                   "checks": ["real-station-http", "download-sha256", "continue-cart-verify",
                              "core-browse", "core-signed-index-install", "stored-registration",
-                             "real-resource-unpack", "uninstall-preserves-user-data"],
+                             "real-resource-unpack", "shader-resource-get", "shader-installed-list",
+                             "original-parameter-ids-ranges-defaults", "bcp47-ui-maps", "uninstall-preserves-user-data"],
                   "not_verified": ["shader-gpu-rendering", "cross-platform", "all-25-selections"],
                   "verification": verification}
         (args.out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")

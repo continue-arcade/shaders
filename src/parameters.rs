@@ -30,13 +30,16 @@ pub struct VariantParameters {
     pub parameters: Vec<Parameter>,
 }
 
-pub(crate) fn extract(root: &Path, registry: &Registry) -> Result<Vec<VariantParameters>> {
-    let source_root = fs::canonicalize(root.join("upstream/slang-shaders"))?;
+pub(crate) fn extract(source_root: &Path, registry: &Registry) -> Result<Vec<VariantParameters>> {
+    let source_root = fs::canonicalize(source_root)?;
     let mut results = Vec::new();
     for variant in &registry.variants {
         let preset =
             ShaderPreset::try_parse(source_root.join(&variant.entrypoint), ShaderFeatures::NONE)
                 .map_err(|e| invalid(format!("preset 解析失败: {e}")))?;
+        if !preset.textures.is_empty() {
+            return Err(invalid("当前 preset profile 不允许纹理"));
+        }
         let mut parameters: BTreeMap<String, Parameter> = BTreeMap::new();
         for (pass_id, pass) in preset.passes.iter().enumerate() {
             let pass_path = fs::canonicalize(&pass.path)?;
@@ -52,7 +55,7 @@ pub(crate) fn extract(root: &Path, registry: &Registry) -> Result<Vec<VariantPar
                 .map_err(|e| invalid(format!("Shader 预处理失败: {e}")))?;
             for parameter in source.parameters.values() {
                 let id = parameter.id.to_string();
-                let closure = crate::sources::dependency_closure(root, pass_relative)?;
+                let closure = crate::sources::dependency_closure(&source_root, pass_relative)?;
                 let mut locations = Vec::new();
                 for path in closure {
                     let text = fs::read_to_string(source_root.join(&path))?;

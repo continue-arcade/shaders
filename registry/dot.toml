@@ -1,0 +1,42 @@
+schema = "continue.shader-family.v1"
+family = "dot"
+version = "0.1.0-smoke.1"
+repository = "https://github.com/libretro/slang-shaders"
+commit = "2b0530bac0e8083d9d643c194929dc0a6b69bd35"
+license = "LicenseRef-Public-Domain"
+source_root = "upstream/slang-shaders"
+cart_id = "org.continue.shaders.dot"
+resource_id = "org.continue.shader.dot"
+tag_prefix = "dot/"
+release_notes = "docs/releases/dot-0.1.0-smoke.1.md"
+copyright = "Author: Themaister; upstream declares Public domain."
+license_scope = "Bundled shader sources retain the upstream Public domain declaration (LicenseRef-Public-Domain). Presets are distributed verbatim with source provenance; no separate preset notice was present. The generator is MIT licensed."
+contributions = []
+
+[packaging]
+cart_name = "Dot Shader Family"
+resource_name = "Dot"
+author = "Themaister"
+cart_description = "Self-contained source-locked Dot family; distribution smoke candidate."
+resource_description = "A lightweight dot-matrix display effect. GPU rendering validation pending."
+
+[[variants]]
+id = "standard"
+entrypoint = "handheld/dot.slangp"
+
+[[files]]
+path = "handheld/dot.slangp"
+sha256 = "97ba13ac0676e7b07f1c6090897962279c1ecbca84c645ea0a920638eab34873"
+
+[[files]]
+path = "handheld/shaders/dot.slang"
+sha256 = "19e01f9d346042fa0363cf72b890de3ec088c374ab6ea5f4f2408dd146f1e415"
+
+[license_file]
+path = "LICENSES/dot-Public-Domain.txt"
+sha256 = "69588fd8530a4408cf3b5dc59ec25bbf8fadcba50ef4a03958487133ca2b93fc"
+source = "https://github.com/libretro/slang-shaders/blob/2b0530bac0e8083d9d643c194929dc0a6b69bd35/handheld/shaders/dot.slang"
+
+[ui_file]
+path = "registry/dot.ui.json"
+sha256 = "61f30bcbf0e4925a8827741d908b3bcc77a7fb8e13bef0e0a18d260ce759a7d5"

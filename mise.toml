@@ -12,6 +12,6 @@ run = [
   "python3 -m unittest discover -s scripts -p 'test_*.py'",
 ]
 
-[tasks."build:zfast-crt"]
-description = "生成 Zfast CRT 自包含家族 Cart 与构建报告。"
-run = "cargo run --locked --release -- build --family zfast-crt --out dist"
+[tasks.build]
+description = "传入 --family <家族> --out <新输出目录> 构建单家族。"
+run = "cargo run --locked --release -- build"

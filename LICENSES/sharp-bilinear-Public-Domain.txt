@@ -1,0 +1,8 @@
+Sharp Bilinear: upstream license notice
+
+Author: Themaister
+License: Public domain
+
+Verbatim notice in pixel-art-scaling/shaders/sharp-bilinear.slang at libretro/slang-shaders@2b0530bac0e8083d9d643c194929dc0a6b69bd35.
+The original source notice is preserved in the packaged shader.
+No CC0 or other license text has been substituted for the upstream declaration.
