@@ -2,6 +2,7 @@
 """通过真实 Station HTTP 和 Core JSON-RPC 在隔离空间验证 Shader Cart 分发。"""
 
 import argparse
+import base64
 import hashlib
 import json
 import selectors
@@ -17,24 +18,45 @@ def get(url):
         return response.read()
 
 
+def validate_public_key(public_key):
+    """即使复用 Core 内置信任根，也核对独立提供的整份公开密钥。"""
+    try:
+        der = base64.b64decode(public_key["public_key_der"], validate=True)
+        expected = "ed25519:" + hashlib.sha256(der).hexdigest()
+        if len(der) != 44 or not der.startswith(bytes.fromhex("302a300506032b6570032100")):
+            raise ValueError("不是 Ed25519 SPKI 公钥")
+        if public_key["key_id"] != expected:
+            raise ValueError("公钥 DER 与 key_id 不符")
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("独立 Station 公钥无效") from error
+
+
 class Core:
     def __init__(self, binary, root):
         self.log = (root / "core.stderr.log").open("w")
-        self.process = subprocess.Popen(
-            [str(binary), "--space", str(root / "space"), "--create",
-             "--user-config-root", str(root / "user"),
-             "--device-config-root", str(root / "device"),
-             "serve", "--exit-on-eof"],
-            stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-            stderr=self.log, text=True, bufsize=1,
-        )
+        try:
+            self.process = subprocess.Popen(
+                [str(binary), "--space", str(root / "space"), "--create",
+                 "--user-config-root", str(root / "user"),
+                 "--device-config-root", str(root / "device"),
+                 "serve", "--exit-on-eof"],
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                stderr=self.log, text=True, bufsize=1,
+            )
+        except BaseException:
+            self.log.close()
+            raise
         self.sequence = 0
         self.transcript = []
         self.selector = selectors.DefaultSelector()
-        self.selector.register(self.process.stdout, selectors.EVENT_READ)
-        ready = self.read()
-        if ready.get("type") != "ready" or ready.get("context") is None:
-            raise RuntimeError(f"隔离 Core 启动失败：{ready}")
+        try:
+            self.selector.register(self.process.stdout, selectors.EVENT_READ)
+            ready = self.read()
+            if ready.get("type") != "ready" or ready.get("context") is None:
+                raise RuntimeError(f"隔离 Core 启动失败：{ready}")
+        except BaseException:
+            self.close(abort=True)
+            raise
 
     def read(self):
         if not self.selector.select(timeout=60):
@@ -56,8 +78,13 @@ class Core:
             raise RuntimeError(f"{method} 失败：{response}")
         return response["result"]
 
-    def close(self):
-        self.process.stdin.close()
+    def close(self, abort=False):
+        if abort and self.process.poll() is None:
+            self.process.terminate()
+        try:
+            self.process.stdin.close()
+        except BrokenPipeError:
+            pass
         try:
             self.process.wait(timeout=30)
         except subprocess.TimeoutExpired:
@@ -66,8 +93,9 @@ class Core:
             raise RuntimeError("Core 正常关闭超时")
         finally:
             self.selector.close()
+            self.process.stdout.close()
             self.log.close()
-        if self.process.returncode != 0:
+        if not abort and self.process.returncode != 0:
             raise RuntimeError(f"Core 退出码：{self.process.returncode}")
 
 
@@ -81,12 +109,13 @@ def main():
     parser.add_argument("--expected-cart", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    args.out.mkdir(parents=True, exist_ok=False)
     base = args.station_url.rstrip("/") + "/"
     parsed = urllib.parse.urlparse(base)
     if parsed.scheme != "http" or parsed.hostname not in {"localhost", "127.0.0.1", "::1"}:
         raise ValueError("本脚本仅验证明确指定的本地回环 Station")
     public_key = json.loads(args.public_key.read_text())
+    validate_public_key(public_key)
+    args.out.mkdir(parents=True, exist_ok=False)
     expected = hashlib.sha256(args.expected_cart.read_bytes()).hexdigest()
     cart_id = "org.continue.shaders.zfast-crt"
     version = "0.1.0-smoke.1"

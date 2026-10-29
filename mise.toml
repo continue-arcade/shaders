@@ -9,6 +9,7 @@ run = [
   "cargo clippy --locked --all-targets -- -D warnings",
   "cargo test --locked",
   "cargo doc --locked --no-deps",
+  "python3 -m unittest discover -s scripts -p 'test_*.py'",
 ]
 
 [tasks."build:zfast-crt"]
