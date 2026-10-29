@@ -1,0 +1,44 @@
+schema = "continue.shader-family.v1"
+family = "zfast-crt"
+version = "0.1.0-smoke.1"
+repository = "https://github.com/libretro/slang-shaders"
+commit = "2b0530bac0e8083d9d643c194929dc0a6b69bd35"
+license = "GPL-2.0-or-later"
+# 首个切片采用明确登记列表；尚未实现全库发现。
+
+[[variants]]
+id = "standard"
+entrypoint = "crt/zfast-crt.slangp"
+
+[[variants]]
+id = "composite"
+entrypoint = "crt/zfast-crt-composite.slangp"
+
+[[files]]
+path = "crt/shaders/zfast_crt/zfast_crt_composite.slang"
+sha256 = "f65a6c0eaa2080c53c8769f5b1d71fd5baf577d7a4852b6eefe56dfb40fa7f12"
+
+[[files]]
+path = "crt/shaders/zfast_crt/zfast_crt_finemask.slang"
+sha256 = "0214419beed4c08d991288e90f8a73700fd7da567a454ad2ffe725b3b6eea366"
+
+[[files]]
+path = "crt/shaders/zfast_crt/zfast_crt_impl.inc"
+sha256 = "e1006274577b85f18ed793856b46f92d5cd6f6207a98af398004644006907bf1"
+
+[[files]]
+path = "crt/zfast-crt-composite.slangp"
+sha256 = "639e0519cff5857f26ccd77ce3550d14e427584e9c0cc5a14ed89faee71f4475"
+
+[[files]]
+path = "crt/zfast-crt.slangp"
+sha256 = "fa3a7f37344f351572e692bc317a21f89f30628c08c09adc1091e4900f1f8e11"
+
+[license_file]
+path = "LICENSES/GPL-2.0-or-later.txt"
+sha256 = "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+source = "https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt"
+
+[ui_file]
+path = "registry/zfast-crt.ui.json"
+sha256 = "7b629db58ed1952d8d9054d1112bb8013aa9866963e5d46abce400d9cde96acc"

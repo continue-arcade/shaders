@@ -1,0 +1,182 @@
+{
+  "description": {
+    "en": "Source-locked Zfast CRT family; rendering validation pending.",
+    "zh-CN": "固定来源的 Zfast CRT 家族；尚待真实渲染验收。"
+  },
+  "groups": {
+    "advanced": {
+      "description": {
+        "en": "Mask and composite video adjustments.",
+        "zh-CN": "荫罩与复合视频调整。"
+      },
+      "label": {
+        "en": "Advanced",
+        "zh-CN": "高级"
+      }
+    },
+    "basic": {
+      "description": {
+        "en": "Common image adjustments.",
+        "zh-CN": "常用画面调整。"
+      },
+      "label": {
+        "en": "Basic",
+        "zh-CN": "基础"
+      }
+    }
+  },
+  "label": {
+    "en": "Zfast CRT",
+    "zh-CN": "Zfast CRT"
+  },
+  "languages": [
+    "en",
+    "zh-CN"
+  ],
+  "parameters": {
+    "BLURSCALEX": {
+      "control": "number",
+      "description": {
+        "en": "Adjusts horizontal filtering blur.",
+        "zh-CN": "调整水平方向的滤波模糊程度。"
+      },
+      "group": "basic",
+      "label": {
+        "en": "Blur Amount X-Axis",
+        "zh-CN": "水平模糊"
+      }
+    },
+    "BRIGHTBOOST": {
+      "control": "number",
+      "description": {
+        "en": "Scales the brightness boost applied to darker pixels.",
+        "zh-CN": "调整暗像素的亮度提升幅度。"
+      },
+      "group": "basic",
+      "label": {
+        "en": "Dark Pixel Brightness Boost",
+        "zh-CN": "暗像素提亮"
+      }
+    },
+    "FINEMASK": {
+      "control": "number",
+      "description": {
+        "en": "Selects the fine mask at 0 and the coarse mask at nonzero values.",
+        "zh-CN": "选择精细（0）或粗略（非零）荫罩。"
+      },
+      "group": "advanced",
+      "label": {
+        "en": "Mask Fine/Coarse",
+        "zh-CN": "精细与粗略荫罩"
+      }
+    },
+    "HILUMSCAN": {
+      "control": "number",
+      "description": {
+        "en": "Adjusts scanline darkness for higher luminance pixels.",
+        "zh-CN": "调整高亮度像素的扫描线暗度。"
+      },
+      "group": "basic",
+      "label": {
+        "en": "Scanline Darkness - High",
+        "zh-CN": "亮部扫描线"
+      }
+    },
+    "LOWLUMSCAN": {
+      "control": "number",
+      "description": {
+        "en": "Adjusts scanline darkness for lower luminance pixels.",
+        "zh-CN": "调整低亮度像素的扫描线暗度。"
+      },
+      "group": "basic",
+      "label": {
+        "en": "Scanline Darkness - Low",
+        "zh-CN": "暗部扫描线"
+      }
+    },
+    "MASK_DARK": {
+      "control": "number",
+      "description": {
+        "en": "Controls the darkening strength of the CRT mask.",
+        "zh-CN": "调整 CRT 荫罩的压暗强度。"
+      },
+      "group": "basic",
+      "label": {
+        "en": "Mask Effect Amount",
+        "zh-CN": "荫罩强度"
+      }
+    },
+    "MASK_FADE": {
+      "control": "number",
+      "description": {
+        "en": "Sets how the mask and scanline effects blend with pixel brightness.",
+        "zh-CN": "调整荫罩和扫描线效果随像素亮度的混合。"
+      },
+      "group": "advanced",
+      "label": {
+        "en": "Mask/Scanline Fade",
+        "zh-CN": "荫罩与扫描线淡化"
+      }
+    },
+    "WARP": {
+      "control": "number",
+      "description": {
+        "en": "Adjusts the simulated curvature of the image.",
+        "zh-CN": "调整画面的模拟曲率。"
+      },
+      "group": "advanced",
+      "label": {
+        "en": "Curvature",
+        "zh-CN": "屏幕曲率"
+      }
+    },
+    "chroma_gain": {
+      "control": "number",
+      "description": {
+        "en": "Scales chroma in the composite video approximation.",
+        "zh-CN": "调整复合视频近似效果的色度增益。"
+      },
+      "group": "advanced",
+      "label": {
+        "en": "NTSC Chroma Gain",
+        "zh-CN": "NTSC 色度增益"
+      }
+    },
+    "sharp": {
+      "control": "number",
+      "description": {
+        "en": "Adjusts sharpness in the composite video approximation.",
+        "zh-CN": "调整复合视频近似效果的锐度。"
+      },
+      "group": "advanced",
+      "label": {
+        "en": "NTSC Sharpness",
+        "zh-CN": "NTSC 锐度"
+      }
+    }
+  },
+  "schema": "continue.shader-ui.v1",
+  "variants": {
+    "composite": {
+      "description": {
+        "en": "CRT with composite video approximation and curvature controls.",
+        "zh-CN": "带复合视频近似效果和曲率控制的 CRT 预设。"
+      },
+      "label": {
+        "en": "Composite",
+        "zh-CN": "复合视频"
+      }
+    },
+    "standard": {
+      "description": {
+        "en": "Fine-mask CRT preset.",
+        "zh-CN": "采用精细荫罩的 CRT 预设。"
+      },
+      "label": {
+        "en": "Standard",
+        "zh-CN": "标准"
+      }
+    }
+  },
+  "default_locale": "en"
+}
