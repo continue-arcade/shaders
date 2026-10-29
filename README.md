@@ -64,6 +64,8 @@ Station 剥离准确前缀后按 SemVer 选择版本，README 与来源记录仍
 
 首轮真实结果见[2026-10-29 联动冒烟记录](docs/verification/2026-10-29-station-smoke.md)：GitHub 候选、跨系统同字节、Station 刷新与正式 Core 安装/卸载均已通过；运行时渲染仍待验收。
 
+多家族本轮结果见 [2026-10-30 多家族执行记录](docs/verification/2026-10-30-multi-family-smoke.md)：两个新家族均完成独立 smoke prerelease、Ubuntu/macOS 同字节、隔离 Station 的真实 GitHub 分发、签名安装和正式 Shader API 读取；实际渲染继续单独验收。共享 Station 的 GitHub 刷新限流与本地导入处置在该记录中单列。
+
 ## 许可与来源
 
 生成器自有代码采用仓库 `LICENSE` 中的许可。上游 Shader 的许可独立记录，Zfast CRT 为 **GPL-2.0-or-later**；保留 Greg Hogan（SoltanGris42）、metallic77 等原始署名与声明。GPL 许可全文及每份固定文件的来源/摘要随交付保存。包装为 Cart 不改变上游许可。

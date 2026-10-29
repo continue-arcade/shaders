@@ -1,0 +1,283 @@
+{
+  "date": "2026-10-30",
+  "timezone": "Asia/Shanghai",
+  "implementation_commit": "b8b854b500f15116369da876661bcd95b0f03d66",
+  "upstream_commit": "2b0530bac0e8083d9d643c194929dc0a6b69bd35",
+  "generator_checks": {
+    "rust_integration_tests": 26,
+    "python_tests": 6,
+    "fmt": true,
+    "check": true,
+    "strict_clippy": true,
+    "strict_rustdoc": true
+  },
+  "github_actions": [
+    {
+      "conclusion": "success",
+      "databaseId": 40922525211,
+      "headSha": "b8b854b500f15116369da876661bcd95b0f03d66",
+      "status": "completed",
+      "url": "https://github.com/continue-arcade/shaders/actions/runs/40922525211",
+      "workflowName": "检查与构建"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 40922482127,
+      "headSha": "b8b854b500f15116369da876661bcd95b0f03d66",
+      "status": "completed",
+      "url": "https://github.com/continue-arcade/shaders/actions/runs/40922482127",
+      "workflowName": "检查与构建"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 40922226755,
+      "headSha": "b8b854b500f15116369da876661bcd95b0f03d66",
+      "status": "completed",
+      "url": "https://github.com/continue-arcade/shaders/actions/runs/40922226755",
+      "workflowName": "发布候选"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 40922218607,
+      "headSha": "b8b854b500f15116369da876661bcd95b0f03d66",
+      "status": "completed",
+      "url": "https://github.com/continue-arcade/shaders/actions/runs/40922218607",
+      "workflowName": "发布候选"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 40922205590,
+      "headSha": "b8b854b500f15116369da876661bcd95b0f03d66",
+      "status": "completed",
+      "url": "https://github.com/continue-arcade/shaders/actions/runs/40922205590",
+      "workflowName": "检查与构建"
+    }
+  ],
+  "families": {
+    "dot": {
+      "passed": true,
+      "station_id": "org.continue.cart-station.shader-families-smoke",
+      "cart_id": "org.continue.shaders.dot",
+      "cart_release": "0.1.0-smoke.1",
+      "resource_id": "org.continue.shader.dot",
+      "variant_parameters": {
+        "standard": 4
+      },
+      "cart_artifact": "artifact.0e17e7a7dce6b84c8c69cb8fd5a39bbe15fb80cbf7fdf54f54822db712be288b",
+      "bundle_sha256": "9046354bc58d646f12915395faad8433754fa71a6ab9d34c64c8956a2d01e074",
+      "signing_key_id": "ed25519:4b6e947d3abb9143f4f5bc8f656a77a627fce260f186c8e1247b4f78198f8bf4",
+      "checks": [
+        "real-station-http",
+        "download-sha256",
+        "continue-cart-verify",
+        "core-browse",
+        "core-signed-index-install",
+        "stored-registration",
+        "real-resource-unpack",
+        "shader-resource-get",
+        "shader-installed-list",
+        "original-parameter-ids-ranges-defaults",
+        "bcp47-ui-maps",
+        "uninstall-preserves-user-data"
+      ],
+      "not_verified": [
+        "shader-gpu-rendering",
+        "cross-platform",
+        "all-25-selections"
+      ],
+      "release_url": "https://github.com/continue-arcade/shaders/releases/tag/dot/v0.1.0-smoke.1",
+      "github_release_id": 428188478,
+      "assets": [
+        {
+          "id": 689350681,
+          "name": "dot-0.1.0-smoke.1.cart",
+          "size": 14523,
+          "digest": "sha256:9046354bc58d646f12915395faad8433754fa71a6ab9d34c64c8956a2d01e074",
+          "browser_download_url": "https://github.com/continue-arcade/shaders/releases/download/dot/v0.1.0-smoke.1/dot-0.1.0-smoke.1.cart"
+        },
+        {
+          "id": 689350680,
+          "name": "dot-0.1.0-smoke.1.md",
+          "size": 533,
+          "digest": "sha256:f4e0b32694cf437fd8ebf728422bce254c048fbdd4763e1829bbd9ff77f6bc28",
+          "browser_download_url": "https://github.com/continue-arcade/shaders/releases/download/dot/v0.1.0-smoke.1/dot-0.1.0-smoke.1.md"
+        },
+        {
+          "id": 689350683,
+          "name": "dot-report.json",
+          "size": 605,
+          "digest": "sha256:a8a66806766dca8075ad262b4e32d1f0940ab64254d07760f45c9ed12a02d975",
+          "browser_download_url": "https://github.com/continue-arcade/shaders/releases/download/dot/v0.1.0-smoke.1/dot-report.json"
+        }
+      ],
+      "ubuntu_macos_bundle_identical": true
+    },
+    "sharp-bilinear": {
+      "passed": true,
+      "station_id": "org.continue.cart-station.shader-families-smoke",
+      "cart_id": "org.continue.shaders.sharp-bilinear",
+      "cart_release": "0.1.0-smoke.1",
+      "resource_id": "org.continue.shader.sharp-bilinear",
+      "variant_parameters": {
+        "standard": 2
+      },
+      "cart_artifact": "artifact.b11177ae0e580a33ff8695647f57a3bf8bf5e0816c0712e44c44b8c6ba5c8dc0",
+      "bundle_sha256": "a34aba5679e3d43629edb3424d8ad2d1faff901cb138d7cf6dcf44367786c278",
+      "signing_key_id": "ed25519:4b6e947d3abb9143f4f5bc8f656a77a627fce260f186c8e1247b4f78198f8bf4",
+      "checks": [
+        "real-station-http",
+        "download-sha256",
+        "continue-cart-verify",
+        "core-browse",
+        "core-signed-index-install",
+        "stored-registration",
+        "real-resource-unpack",
+        "shader-resource-get",
+        "shader-installed-list",
+        "original-parameter-ids-ranges-defaults",
+        "bcp47-ui-maps",
+        "uninstall-preserves-user-data"
+      ],
+      "not_verified": [
+        "shader-gpu-rendering",
+        "cross-platform",
+        "all-25-selections"
+      ],
+      "release_url": "https://github.com/continue-arcade/shaders/releases/tag/sharp-bilinear/v0.1.0-smoke.1",
+      "github_release_id": 428188419,
+      "assets": [
+        {
+          "id": 689350484,
+          "name": "sharp-bilinear-0.1.0-smoke.1.cart",
+          "size": 11434,
+          "digest": "sha256:a34aba5679e3d43629edb3424d8ad2d1faff901cb138d7cf6dcf44367786c278",
+          "browser_download_url": "https://github.com/continue-arcade/shaders/releases/download/sharp-bilinear/v0.1.0-smoke.1/sharp-bilinear-0.1.0-smoke.1.cart"
+        },
+        {
+          "id": 689350488,
+          "name": "sharp-bilinear-0.1.0-smoke.1.md",
+          "size": 566,
+          "digest": "sha256:07f76df9245acee53eda51b39804ce34677dd676339c83e693d51c021277ce8e",
+          "browser_download_url": "https://github.com/continue-arcade/shaders/releases/download/sharp-bilinear/v0.1.0-smoke.1/sharp-bilinear-0.1.0-smoke.1.md"
+        },
+        {
+          "id": 689350485,
+          "name": "sharp-bilinear-report.json",
+          "size": 682,
+          "digest": "sha256:e16f8dc720f80d064c1d198b37ab3f721a2c5d8552d4c16e84f087a118e89c0e",
+          "browser_download_url": "https://github.com/continue-arcade/shaders/releases/download/sharp-bilinear/v0.1.0-smoke.1/sharp-bilinear-report.json"
+        }
+      ],
+      "ubuntu_macos_bundle_identical": true
+    },
+    "zfast-crt": {
+      "passed": true,
+      "station_id": "org.continue.cart-station.shader-families-smoke",
+      "cart_id": "org.continue.shaders.zfast-crt",
+      "cart_release": "0.1.0-smoke.1",
+      "resource_id": "org.continue.shader.zfast-crt",
+      "variant_parameters": {
+        "standard": 6,
+        "composite": 10
+      },
+      "cart_artifact": "artifact.d4b841a04826b0820ea97303354b3cd23e9ce79046a1c2059d9cf4a0dec35290",
+      "bundle_sha256": "994f652527d6f7a7b05d74cd15a5aae32e1ee1cc7e3284b1888a88f1216fb3cf",
+      "signing_key_id": "ed25519:4b6e947d3abb9143f4f5bc8f656a77a627fce260f186c8e1247b4f78198f8bf4",
+      "checks": [
+        "real-station-http",
+        "download-sha256",
+        "continue-cart-verify",
+        "core-browse",
+        "core-signed-index-install",
+        "stored-registration",
+        "real-resource-unpack",
+        "shader-resource-get",
+        "shader-installed-list",
+        "original-parameter-ids-ranges-defaults",
+        "bcp47-ui-maps",
+        "uninstall-preserves-user-data"
+      ],
+      "not_verified": [
+        "shader-gpu-rendering",
+        "cross-platform",
+        "all-25-selections"
+      ],
+      "release_url": "https://github.com/continue-arcade/shaders/releases/tag/zfast-crt/v0.1.0-smoke.1",
+      "github_release_id": 428034589,
+      "assets": [
+        {
+          "id": 688966461,
+          "name": "zfast-crt-0.1.0-smoke.1.cart",
+          "size": 55279,
+          "digest": "sha256:994f652527d6f7a7b05d74cd15a5aae32e1ee1cc7e3284b1888a88f1216fb3cf",
+          "browser_download_url": "https://github.com/continue-arcade/shaders/releases/download/zfast-crt/v0.1.0-smoke.1/zfast-crt-0.1.0-smoke.1.cart"
+        },
+        {
+          "id": 688966462,
+          "name": "zfast-crt-report.json",
+          "size": 459,
+          "digest": "sha256:c0109e779cea15658157a2557f1e62b9fcd89deb336472480171852dd669db0b",
+          "browser_download_url": "https://github.com/continue-arcade/shaders/releases/download/zfast-crt/v0.1.0-smoke.1/zfast-crt-report.json"
+        }
+      ],
+      "ubuntu_macos_bundle_identical": true
+    }
+  },
+  "independence": {
+    "single_family_version_bump_changes_only_that_cart": true,
+    "publish_sharp_preserves_dot_draft_and_zfast_assets": true,
+    "publish_dot_preserves_sharp_and_zfast_assets": true,
+    "zfast_published_bytes_unchanged": true,
+    "existing_tag_rejected_before_release_mutation": true
+  },
+  "coexistence": {
+    "passed": true,
+    "checks": [
+      "three-family-signed-install-in-one-isolated-space",
+      "resource-list-without-issues",
+      "original-parameter-maps",
+      "remove-one-family-preserves-siblings",
+      "reinstall-one-family-preserves-all-artifact-bytes"
+    ],
+    "resources": {
+      "dot": {
+        "resource_id": "org.continue.shader.dot",
+        "cart_id": "org.continue.shaders.dot",
+        "version": "0.1.0-smoke.1"
+      },
+      "sharp-bilinear": {
+        "resource_id": "org.continue.shader.sharp-bilinear",
+        "cart_id": "org.continue.shaders.sharp-bilinear",
+        "version": "0.1.0-smoke.1"
+      },
+      "zfast-crt": {
+        "resource_id": "org.continue.shader.zfast-crt",
+        "cart_id": "org.continue.shaders.zfast-crt",
+        "version": "0.1.0-smoke.1"
+      }
+    },
+    "immutable_file_count": 34,
+    "gpu_render": false
+  },
+  "shared_station": {
+    "port": 4318,
+    "restarted": false,
+    "public_key_unchanged": true,
+    "sources_added": [
+      "sharp-bilinear/",
+      "dot/"
+    ],
+    "github_refresh_successful": false,
+    "github_refresh_error": "GitHub anonymous rate limit HTTP 403 while reading README; following sources not requested",
+    "retry_after_seconds_observed": 1761,
+    "fallback": "Imported exact verified GitHub Release asset bytes through existing Station import command",
+    "http_download_sha256_checked_for_all_three": true
+  },
+  "not_verified": [
+    "new-family-gpu-rendering",
+    "visual-quality",
+    "performance",
+    "cross-platform-runtime",
+    "all-25-selections"
+  ]
+}
