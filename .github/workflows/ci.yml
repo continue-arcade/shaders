@@ -21,4 +21,3 @@ jobs:
         run: mise run check
       - name: 生成自包含家族 Cart
         run: mise exec -- cargo run --locked -- build --family zfast-crt --out dist
-
