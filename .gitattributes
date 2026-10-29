@@ -1,0 +1,5 @@
+* text=auto eol=lf
+# 固定来源与被摘要锁定的输入保持原始字节，含上游已有 CRLF。
+upstream/** -text
+LICENSES/** -text
+registry/*.ui.json -text
