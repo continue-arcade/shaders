@@ -359,6 +359,11 @@ fn new_language_maps_are_preserved_without_generator_changes() {
         serde_json::from_slice(&fs::read(out.path().join("zfast-crt/ui.json")).unwrap()).unwrap();
     assert_eq!(ui["parameters"]["BLURSCALEX"]["label"]["ja"], "水平ぼかし");
     assert_eq!(ui["default_locale"], "en");
+    assert_eq!(ui["languages"], serde_json::json!(["en", "ja", "zh-CN"]));
+    // ja 只提供局部翻译；默认语言保证缺失文案存在可回退目标。
+    let basic_label = ui["groups"]["basic"]["label"].as_object().unwrap();
+    assert!(!basic_label.contains_key("ja"));
+    assert!(basic_label.contains_key(ui["default_locale"].as_str().unwrap()));
 }
 
 #[test]

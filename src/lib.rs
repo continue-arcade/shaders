@@ -1,4 +1,8 @@
 //! 固定来源的 Shader Cart 生成器。解析与打包不代表 GPU 渲染验收。
+//!
+//! UI 文案采用语言标签映射。输出 `languages` 从实际映射派生，只表示至少存在一项
+//! 翻译；局部语言允许缺少其他翻译，消费者应按 `default_locale` 读取回退文案。
+//! 新增语言只需更新登记的 UI 数据及其摘要，无须修改生成器。
 #![forbid(unsafe_code)]
 
 mod package;
