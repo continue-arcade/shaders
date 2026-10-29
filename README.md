@@ -56,6 +56,8 @@ Station 剥离准确前缀后按 SemVer 选择版本，README 与来源记录仍
 
 本机联动冒烟通过现有 `continue-core` 正式 API 使用隔离 ContinueSpace，不读写用户的真实游戏资料。详见 `scripts/smoke_station.py --help` 与后续执行记录。
 
+首轮真实结果见[2026-10-29 联动冒烟记录](docs/verification/2026-10-29-station-smoke.md)：GitHub 候选、跨系统同字节、Station 刷新与正式 Core 安装/卸载均已通过；运行时渲染仍待验收。
+
 ## 许可与来源
 
 生成器自有代码采用仓库 `LICENSE` 中的许可。上游 Shader 的许可独立记录，Zfast CRT 为 **GPL-2.0-or-later**；保留 Greg Hogan（SoltanGris42）、metallic77 等原始署名与声明。GPL 许可全文及每份固定文件的来源/摘要随交付保存。包装为 Cart 不改变上游许可。
