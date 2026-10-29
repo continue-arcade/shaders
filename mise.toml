@@ -1,0 +1,16 @@
+[tools]
+rust = "1.93.1"
+
+[tasks.check]
+description = "检查生成器格式、编译、lint、测试和文档。"
+run = [
+  "cargo fmt --all -- --check",
+  "cargo check --locked --all-targets",
+  "cargo clippy --locked --all-targets -- -D warnings",
+  "cargo test --locked",
+  "cargo doc --locked --no-deps",
+]
+
+[tasks."build:zfast-crt"]
+description = "生成 Zfast CRT 自包含家族 Cart 与构建报告。"
+run = "cargo run --locked --release -- build --family zfast-crt --out dist"
